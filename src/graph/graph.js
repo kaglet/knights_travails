@@ -31,13 +31,20 @@ class Graph {
                 connectionsList.prepend(new Node(i-2, j-1));                
                 
                 connectionsList.prepend(new Node(i-1, j-2));
-                connectionsList.prepend(new Node(i+1, j-2));                            
+                connectionsList.prepend(new Node(i+1, j-2));
+                
+                // Prepend the node itself so we may have access to its parent later and other properties in this index
+                connectionsList.prepend(new Node(i, j));
             }
         }
     }
 
     get grid() {
         return this.connectionsGrid;
+    }
+
+    isOutOfBounds() {
+        
     }
 }
 
