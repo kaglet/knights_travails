@@ -2,12 +2,31 @@ import Graph from "./graph/graph.js";
 import { Queue } from '@datastructures-js/queue';
 
 function traceParents(pathEndNode, pathStartNode) {
+    let curr = pathEndNode;
 // Trace from node with end indices to one with start indices through the parent property each of them has set
+    while (pathEndNode.x !== pathStartNode.x && pathEndNode.y !== pathStartNode.y) {
+        console.log([curr.x, curr.y]);
+        curr = curr.parent;
+    }
 
+    console.log([curr.x, curr.y]);
 }
 
-function extractNodeAsArray(node) {
-    return [node.x, node.y];
+function getMoves(frontNode, graph) {
+    // Get node coordinates in order to find next connection moves in grid
+    let i = frontNode.x;
+    let j = frontNode.y;
+
+    let move1 = graph.grid[i][j].head.next;
+    let move2 = graph.grid[i][j].head.next.next;
+    let move3 = graph.grid[i][j].head.next.next.next;
+    let move4 = graph.grid[i][j].head.next.next.next.next;
+    let move5 = graph.grid[i][j].head.next.next.next.next.next;
+    let move6 = graph.grid[i][j].head.next.next.next.next.next.next;
+    let move7 = graph.grid[i][j].head.next.next.next.next.next.next.next;
+    let move8 = graph.grid[i][j].head.next.next.next.next.next.next.next.next;
+
+    return [move1, move2, move3, move4, move5, move6, move7, move8];
 }
 
 function knightMoves(start, end, graph) {
@@ -33,24 +52,17 @@ function knightMoves(start, end, graph) {
             traceParents(frontNode, startNode);
             return;
         }
-        // Get node coordinates in order to find next move connections in grid
-        let i = frontNode.x;
-        let j = frontNode.y;
 
-        let move1 = graph.grid[i][j].head.next;
-        let move2 = graph.grid[i][j].head.next.next;
-        let move3 = graph.grid[i][j].head.next.next.next;
-        let move4 = graph.grid[i][j].head.next.next.next.next;
-        let move5 = graph.grid[i][j].head.next.next.next.next.next;
-        let move6 = graph.grid[i][j].head.next.next.next.next.next.next;
-        let move7 = graph.grid[i][j].head.next.next.next.next.next.next.next;
-        let move8 = graph.grid[i][j].head.next.next.next.next.next.next.next.next;
-
-        let movesArr = [move1, move2, move3, move4, move5, move6, move7, move8];
+        let movesArr = getMoves(frontNode, graph);
 
         for (let k = 0; k < movesArr.length; k++) {
-            movesArr[k].parent = graph.grid[i][j];
+            // If parent is already present keep the original parent at the same level or at a later level as the shortest path
+            if (movesArr[k].parent !== undefined) {
+                movesArr[k].parent = graph.grid[i][j];
+            }
+            
             // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
+            // This kills connections to search for end path dead ending any paths that got to this invalid move
             if (!graph.isOutOfBounds(movesArr[k])) {
                 queue.enqueue(movesArr[k]);
             }
@@ -58,6 +70,8 @@ function knightMoves(start, end, graph) {
     }
 }
 
-let graph = new Graph(3);
+let graph = new Graph(8);
 
 console.log(graph.grid);
+
+knightMoves([3,3], [4,3]);
