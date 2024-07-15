@@ -1,10 +1,10 @@
 import { Queue } from '@datastructures-js/queue';
 import Cell from "./node/cell.js";
 
-function traceParents(pathEndNode, pathStartNode) {
-    let curr = pathEndNode;
+function traceParents(pathEndCell, pathStartCell) {
+    let curr = pathEndCell;
 // Trace from node with end indices to one with start indices through the parent property each of them has set
-    while (pathEndNode.x !== pathStartNode.x && pathEndNode.y !== pathStartNode.y) {
+    while (pathEndCell.x !== pathStartCell.x && pathEndCell.y !== pathStartCell.y) {
         console.log([curr.x, curr.y]);
         curr = curr.parent;
     }
@@ -12,11 +12,7 @@ function traceParents(pathEndNode, pathStartNode) {
     console.log([curr.x, curr.y]);
 }
 
-function getMoves(frontNode, graph) {
-    // Get node coordinates in order to find next connection moves in grid
-    let i = frontNode.x;
-    let j = frontNode.y;
-
+function getMoves(graph, i, j) {
     let move1 = graph.grid[i][j].head.next;
     let move2 = graph.grid[i][j].head.next.next;
     let move3 = graph.grid[i][j].head.next.next.next;
@@ -33,27 +29,31 @@ function knightMoves(start, end, graph) {
     let queue = new Queue();
     // Convert start and end into nodes for ease of not having to work with arrays only objects
     // Throw away arrays to work in my preferred data representation form
-    let startNode = new Cell(start[0], start[1]);
-    let endNode = new Cell(end[0], end[1]);
-    queue.enqueue(startNode);
+    let startCell = new Cell(start[0], start[1]);
+    let endCell = new Cell(end[0], end[1]);
+    queue.enqueue(startCell);
 
-    if (graph.isOutOfBounds(startNode)) {
+    if (graph.isOutOfBounds(startCell)) {
         return "Start is out of bounds";
-    } else if (graph.isOutOfBounds(endNode)) {
+    } else if (graph.isOutOfBounds(endCell)) {
         return "End is out of bounds";
     }
 
     while(!queue.isEmpty()) {
-        let frontNode = queue.dequeue();
+        let frontCell = queue.dequeue();
         
-        if (frontNode.x === endNode.x && frontNode.y === endNode.y) {
+        if (frontCell.x === endCell.x && frontCell.y === endCell.y) {
             // Return path by indexing into node, it's parent property that is set
             // Print parent, itself from end and its parent until it hits the base case which is equal to the start node in coordinates, so could be a recursive algo or a while loop
-            traceParents(frontNode, startNode);
+            traceParents(frontCell, startCell);
             return;
         }
 
-        let movesArr = getMoves(frontNode, graph);
+        // Get node coordinates in order to find next connection moves in grid
+        let i = frontCell.x;
+        let j = frontCell.y;
+
+        let movesArr = getMoves(graph, i, j);
 
         for (let k = 0; k < movesArr.length; k++) {
             // If parent is already present keep the original parent at the same level or at a later level as the shortest path
@@ -64,7 +64,7 @@ function knightMoves(start, end, graph) {
             // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
             // This kills connections to search for end path dead ending any paths that got to this invalid move
             if (!graph.isOutOfBounds(movesArr[k])) {
-                queue.enqueue(movesArr[k]);
+                queue.enqueue(movesArr[k].value);
             }
         }
     }
