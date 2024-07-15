@@ -1,5 +1,4 @@
 // Representation of graph for the problem
-
 import LinkedList from "@kago_m/linked_list";
 import Node from "../node/node.js";
 
@@ -43,8 +42,8 @@ class Graph {
         return this.connectionsGrid;
     }
 
-    isOutOfBounds() {
-        
+    isOutOfBounds(node) {
+        return node.x > this.size || node.x < 0 || node.y > this.size || node.y < 0; 
     }
 }
 

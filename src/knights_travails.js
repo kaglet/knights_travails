@@ -18,7 +18,11 @@ function knightMoves(start, end, graph) {
     let endNode = new Node(end[0], end[1]);
     queue.enqueue(startNode);
 
-    // TODO: Check if start and end is out of bounds of grid and immediately exit
+    if (graph.isOutOfBounds(startNode)) {
+        return "Start is out of bounds";
+    } else if (graph.isOutOfBounds(endNode)) {
+        return "End is out of bounds";
+    }
 
     while(!queue.isEmpty()) {
         let frontNode = queue.dequeue();
@@ -42,7 +46,15 @@ function knightMoves(start, end, graph) {
         let move7 = graph.grid[i][j].head.next.next.next.next.next.next.next;
         let move8 = graph.grid[i][j].head.next.next.next.next.next.next.next.next;
 
-        queue.enqueue(move1).enqueue(move2).enqueue(move3).enqueue(move4).enqueue(move5).enqueue(move6).enqueue(move7).enqueue(move8);
+        let movesArr = [move1, move2, move3, move4, move5, move6, move7, move8];
+
+        for (let k = 0; k < movesArr.length; k++) {
+            movesArr[k].parent = graph.grid[i][j];
+            // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
+            if (!graph.isOutOfBounds(movesArr[k])) {
+                queue.enqueue(movesArr[k]);
+            }
+        }
     }
 }
 
