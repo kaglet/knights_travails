@@ -42,7 +42,7 @@ class Graph {
     }
 
     isOutOfBounds(node) {
-        return node.x > this._size || node.x < 0 || node.y > this._size || node.y < 0; 
+        return node.x >= this._size || node.x < 0 || node.y >= this._size || node.y < 0; 
     }
 }
 

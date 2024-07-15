@@ -13,6 +13,9 @@ function traceParents(pathEndCell, pathStartCell) {
 }
 
 function getMoves(graph, i, j) {
+    // if (graph.isOutOfBounds(new Node(i, j))) {
+    //     return;
+    // }
     let move1 = graph.grid[i][j].head.next;
     let move2 = graph.grid[i][j].head.next.next;
     let move3 = graph.grid[i][j].head.next.next.next;
@@ -53,6 +56,7 @@ function knightMoves(start, end, graph) {
         let i = frontCell.x;
         let j = frontCell.y;
 
+        // Get moves do not discard yet
         let movesArr = getMoves(graph, i, j);
 
         for (let k = 0; k < movesArr.length; k++) {
