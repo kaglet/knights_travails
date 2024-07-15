@@ -1,5 +1,5 @@
-import Graph from "./graph/graph.js";
 import { Queue } from '@datastructures-js/queue';
+import Node from "./node/node.js";
 
 function traceParents(pathEndNode, pathStartNode) {
     let curr = pathEndNode;
@@ -70,8 +70,5 @@ function knightMoves(start, end, graph) {
     }
 }
 
-let graph = new Graph(8);
+export {knightMoves};
 
-console.log(graph.grid);
-
-knightMoves([3,3], [4,3]);

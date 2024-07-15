@@ -1,5 +1,8 @@
 import Graph from "./graph/graph.js";
+import { knightMoves } from "./knights_travails.js";
 
-let graph = new Graph(3);
+let graph = new Graph(8);
 
-console.log(graph);
+console.log(graph.grid);
+
+knightMoves([3,3], [4,3], graph);
