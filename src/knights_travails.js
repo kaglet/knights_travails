@@ -16,6 +16,8 @@ function getMoves(graph, i, j) {
     // if (graph.isOutOfBounds(new Node(i, j))) {
     //     return;
     // }
+
+    // When adding all these next moves some are invalid, they must not be added into the queue
     let move1 = graph.grid[i][j].head.next;
     let move2 = graph.grid[i][j].head.next.next;
     let move3 = graph.grid[i][j].head.next.next.next;
@@ -67,9 +69,10 @@ function knightMoves(start, end, graph) {
             
             // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
             // This kills connections to search for end path dead ending any paths that got to this invalid move
-            if (!graph.isOutOfBounds(movesArr[k])) {
+            if (!graph.isOutOfBounds(movesArr[k].value)) {
                 queue.enqueue(movesArr[k].value);
             }
+            
         }
     }
 }
