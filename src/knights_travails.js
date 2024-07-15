@@ -1,5 +1,5 @@
 import { Queue } from '@datastructures-js/queue';
-import Node from "./node/node.js";
+import Cell from "./node/cell.js";
 
 function traceParents(pathEndNode, pathStartNode) {
     let curr = pathEndNode;
@@ -33,8 +33,8 @@ function knightMoves(start, end, graph) {
     let queue = new Queue();
     // Convert start and end into nodes for ease of not having to work with arrays only objects
     // Throw away arrays to work in my preferred data representation form
-    let startNode = new Node(start[0], start[1]);
-    let endNode = new Node(end[0], end[1]);
+    let startNode = new Cell(start[0], start[1]);
+    let endNode = new Cell(end[0], end[1]);
     queue.enqueue(startNode);
 
     if (graph.isOutOfBounds(startNode)) {

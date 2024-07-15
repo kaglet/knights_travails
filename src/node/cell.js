@@ -1,4 +1,4 @@
-class Node {
+class Cell {
     constructor(x, y) {
         this._parent = undefined;
         this._x = x;
@@ -30,4 +30,4 @@ class Node {
     }
 }
 
-export default Node;
+export default Cell;
