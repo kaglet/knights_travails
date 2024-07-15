@@ -63,8 +63,8 @@ function knightMoves(start, end, graph) {
 
         for (let k = 0; k < movesArr.length; k++) {
             // If parent is already present keep the original parent at the same level or at a later level as the shortest path
-            if (movesArr[k].parent !== undefined) {
-                movesArr[k].parent = graph.grid[i][j];
+            if (typeof movesArr[k].value.parent === "undefined") {
+                movesArr[k].value.parent = graph.grid[i][j].head.value;
             }
             
             // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
@@ -72,7 +72,6 @@ function knightMoves(start, end, graph) {
             if (!graph.isOutOfBounds(movesArr[k].value)) {
                 queue.enqueue(movesArr[k].value);
             }
-            
         }
     }
 }
