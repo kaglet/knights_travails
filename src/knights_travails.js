@@ -13,10 +13,6 @@ function traceParents(pathEndCell, pathStartCell) {
 }
 
 function getMoves(graph, i, j) {
-    // if (graph.isOutOfBounds(new Node(i, j))) {
-    //     return;
-    // }
-
     // When adding all these next moves some are invalid, they must not be added into the queue
     let move1 = graph.grid[i][j].head.next;
     let move2 = graph.grid[i][j].head.next.next;
@@ -32,6 +28,7 @@ function getMoves(graph, i, j) {
 
 function knightMoves(start, end, graph) {
     let queue = new Queue();
+
     // Convert start and end into nodes for ease of not having to work with arrays only objects
     // Throw away arrays to work in my preferred data representation form
     let startCell = new Cell(start[0], start[1]);
@@ -46,6 +43,7 @@ function knightMoves(start, end, graph) {
 
     while(!queue.isEmpty()) {
         let frontCell = queue.dequeue();
+        frontCell.visit();
         
         if (frontCell.x === endCell.x && frontCell.y === endCell.y) {
             // Return path by indexing into node, it's parent property that is set
@@ -64,12 +62,12 @@ function knightMoves(start, end, graph) {
         for (let k = 0; k < movesArr.length; k++) {
             // If parent is already present keep the original parent at the same level or at a later level as the shortest path
             if (typeof movesArr[k].value.parent === "undefined") {
-                movesArr[k].value.parent = graph.grid[i][j].head.value;
+                movesArr[k].value.parent = frontCell;
             }
             
             // Enqueue to explore its connections only if its a valid move else its not even a valid move in a path anyway
             // This kills connections to search for end path dead ending any paths that got to this invalid move
-            if (!graph.isOutOfBounds(movesArr[k].value)) {
+            if (!graph.isOutOfBounds(movesArr[k].value) && !movesArr[k].value.visited) {
                 queue.enqueue(movesArr[k].value);
             }
         }

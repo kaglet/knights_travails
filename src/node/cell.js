@@ -3,6 +3,7 @@ class Cell {
         this._parent = undefined;
         this._x = x;
         this._y = y;
+        this._visited = false;
     }
 
     set x(value) {
@@ -17,6 +18,10 @@ class Cell {
         this._parent = value;
     }
 
+    visit() {
+        this._visited = true;
+    }
+
     get x() {
         return this._x;
     }
@@ -27,6 +32,10 @@ class Cell {
 
     get parent() {
         return this._parent;
+    }
+
+    get visited() {
+        return this._visited;
     }
 }
 
