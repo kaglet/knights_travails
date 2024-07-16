@@ -4,7 +4,7 @@ import Cell from "./node/cell.js";
 function traceParents(pathEndCell, pathStartCell) {
     let curr = pathEndCell;
 // Trace from node with end indices to one with start indices through the parent property each of them has set
-    while (curr.x !== pathStartCell.x && curr.y !== pathStartCell.y) {
+    while (!(curr.x === pathStartCell.x && curr.y === pathStartCell.y)) {
         console.log([curr.x, curr.y]);
         curr = curr.parent;
     }
