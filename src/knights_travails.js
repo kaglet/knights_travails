@@ -3,13 +3,18 @@ import Cell from "./node/cell.js";
 
 function traceParents(pathEndCell, pathStartCell) {
     let curr = pathEndCell;
+    let counter = 0;
 // Trace from node with end indices to one with start indices through the parent property each of them has set
+    console.log("From", [pathStartCell.x, pathStartCell.y].toString(), "to", [pathEndCell.x, pathEndCell.y].toString(),"path is:");
     while (!(curr.x === pathStartCell.x && curr.y === pathStartCell.y)) {
-        console.log([curr.x, curr.y]);
+        console.log([curr.x, curr.y].toString());
         curr = curr.parent;
+        counter++;
     }
 
-    console.log([curr.x, curr.y]);
+    counter++;
+    console.log([curr.x, curr.y].toString());
+    console.log(`${counter} moves taken`);
 }
 
 function getMoves(graph, i, j) {
@@ -36,9 +41,11 @@ function knightMoves(start, end, graph) {
     queue.enqueue(startCell);
 
     if (graph.isOutOfBounds(startCell)) {
-        return "Start is out of bounds";
+        console.log("Start is out of bounds");
+        return;
     } else if (graph.isOutOfBounds(endCell)) {
-        return "End is out of bounds";
+        console.log("End is out of bounds")
+        return;
     }
 
     while(!queue.isEmpty()) {
