@@ -2,9 +2,7 @@
 
 ## About
 
-This is a solution to the Knight's Travails path finding problem as part of The Odin Project. Details are below. There is no GUI for this project. It works via the browser console with prompts that can be followed.
-
-Find the live link [here]().
+This is a solution to the Knight's Travails path finding problem as part of The Odin Project. Details are below. There is no GUI for this project. It works via the browser console.
 
 ### [Assignment](https://www.theodinproject.com/lessons/javascript-knights-travails#assignment)
 
